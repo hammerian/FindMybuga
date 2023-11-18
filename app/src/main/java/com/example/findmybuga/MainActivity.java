@@ -1,5 +1,6 @@
 package com.example.findmybuga;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements LocationEngineLis
 
         rclPos.setLayoutManager(new LinearLayoutManager(this));
         listPos = new ArrayList<PoiPos>();
-        listAdapter= new MyListAdapter(listPos);
+        listAdapter= new MyListAdapter(listPos,this.getApplicationContext());
         // Y carga el Array de imagenes
         rclPos.setAdapter(listAdapter);
         rclPos.setHasFixedSize(false);
@@ -116,6 +117,13 @@ public class MainActivity extends AppCompatActivity implements LocationEngineLis
             permissionsManager = new PermissionsManager((PermissionsListener) this);
             permissionsManager.requestLocationPermissions(this);
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        permissionsManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @SuppressLint("MissingPermission")

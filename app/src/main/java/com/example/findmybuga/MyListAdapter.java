@@ -1,6 +1,8 @@
 package com.example.findmybuga;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +19,7 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
     private ArrayList<PoiPos> listData;
     private static Context adapHolder;
 
-    public MyListAdapter(ArrayList<PoiPos> listData) {
+    public MyListAdapter(ArrayList<PoiPos> listData, Context context) {
         // Carga el array de datos en el Adapter
         this.listData = listData;
     }
@@ -35,7 +37,7 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            // Instancia la imagen en la celda
+            // Instancia los objetos en la celda
             this.posDesc = (TextView) itemView.findViewById(R.id.txtDesc);
             this.posLati = (TextView) itemView.findViewById(R.id.txtLati);
             this.posLong = (TextView) itemView.findViewById(R.id.txtLong);
@@ -61,6 +63,21 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
         holder.posDesc.setText(mListData.getDescription());
         holder.posLati.setText(mListData.getLati());
         holder.posLong.setText(mListData.getLong());
+
+        // Evento para ir al mapa con las coordenadas de la celda
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Definimos el Intent y creamos el Bundle
+                Intent intent = new Intent(holder.itemView.getContext(), MapActivity.class);
+                Bundle b = new Bundle();
+                //agregamos la coordenada.
+                intent.putExtra("mapData", mListData);
+                intent.putExtras(b);
+                //begin activity
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
 
     }
 

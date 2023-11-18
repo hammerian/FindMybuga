@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "487469061155",
+    "firebase_url": "https://findmybuga-default-rtdb.firebaseio.com",
+    "project_id": "findmybuga",
+    "storage_bucket": "findmybuga.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:487469061155:android:f3b6b5f0a40f4c0a32cd96",
+        "android_client_info": {
+          "package_name": "com.example.findmybuga"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqJdZKIoHkwEnM440dixNOWjTPT3A0fbA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
