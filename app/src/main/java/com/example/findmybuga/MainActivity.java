@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements LocationEngineLis
     public ArrayList<PoiPos> listPos;
 
     private Button btnPos;
+    private Button btnHist;
 
     @SuppressLint("MissingPermission")
     @Override
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements LocationEngineLis
 
         rclPos = (RecyclerView) findViewById(R.id.rclPos);
         btnPos = (Button) findViewById(R.id.btnPos);
+        btnHist = (Button) findViewById(R.id.btnHist);
         enableLocation();
 
         rclPos.setLayoutManager(new LinearLayoutManager(this));
@@ -85,6 +88,24 @@ public class MainActivity extends AppCompatActivity implements LocationEngineLis
                  // Toast.makeText(MainActivity.this, "Longitud: " + originLocation.getLongitude() + " Latitud: " + originLocation.getLatitude(), Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(MainActivity.this, "No hemos podido acceder a su ubicación", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btnHist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listPos.size() > 0) {
+                    //Definimos el Intent y creamos el Bundle
+                    Intent intent = new Intent(MainActivity.this, MapActivity.class);
+                    Bundle b = new Bundle();
+                    //agregamos la coordenada.
+                    intent.putExtra("listData", listPos);
+                    intent.putExtras(b);
+                    //begin activity
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(MainActivity.this, "Tienes que añadir varias localizaciones para ver el historial", Toast.LENGTH_SHORT).show();
                 }
             }
         });

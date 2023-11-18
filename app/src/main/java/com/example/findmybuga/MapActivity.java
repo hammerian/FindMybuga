@@ -40,6 +40,7 @@ public class MapActivity extends AppCompatActivity  implements OnMapReadyCallbac
     private Point destinationPosition;
     private Location originLocation;
     private Marker destinationMarker;
+    public ArrayList<PoiPos> listPos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class MapActivity extends AppCompatActivity  implements OnMapReadyCallbac
 
         Bundle extras = getIntent().getExtras();
         originPosition = (PoiPos) extras.getSerializable("mapData");
+
 
 
     }
