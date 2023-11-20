@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements LocationEngineLis
                     Intent intent = new Intent(MainActivity.this, MapActivity.class);
                     Bundle b = new Bundle();
                     //agregamos la coordenada.
-                    intent.putExtra("listData", listPos);
+                    intent.putExtra("mapData", listPos);
                     intent.putExtras(b);
                     //begin activity
                     startActivity(intent);

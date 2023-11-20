@@ -71,8 +71,11 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
                 //Definimos el Intent y creamos el Bundle
                 Intent intent = new Intent(holder.itemView.getContext(), MapActivity.class);
                 Bundle b = new Bundle();
+
                 //agregamos la coordenada.
-                intent.putExtra("mapData", mListData);
+                ArrayList<PoiPos> oneData = new ArrayList<>();
+                oneData.add(mListData);
+                intent.putExtra("mapData", oneData);
                 intent.putExtras(b);
                 //begin activity
                 holder.itemView.getContext().startActivity(intent);

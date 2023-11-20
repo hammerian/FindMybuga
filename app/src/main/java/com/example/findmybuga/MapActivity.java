@@ -39,7 +39,6 @@ public class MapActivity extends AppCompatActivity  implements OnMapReadyCallbac
     private PoiPos originPosition;
     private Point destinationPosition;
     private Location originLocation;
-    private Marker destinationMarker;
     public ArrayList<PoiPos> listPos;
 
     @Override
@@ -52,7 +51,7 @@ public class MapActivity extends AppCompatActivity  implements OnMapReadyCallbac
         mvBox.getMapAsync(this);
 
         Bundle extras = getIntent().getExtras();
-        originPosition = (PoiPos) extras.getSerializable("mapData");
+        listPos = (ArrayList<PoiPos>) extras.getSerializable("mapData");
 
 
 
@@ -95,9 +94,14 @@ public class MapActivity extends AppCompatActivity  implements OnMapReadyCallbac
         map = mapboxMap;
         map.addOnMapClickListener(this);
         enableLocation();
-        if (originPosition!=null) {
-            LatLng point = new LatLng(Double.parseDouble(originPosition.getLati()), Double.parseDouble(originPosition.getLong()));
-            destinationMarker = map.addMarker(new MarkerOptions().position(point));
+        if (listPos!=null) {
+            for (PoiPos myPoi: listPos) {
+                String poiDesc = myPoi.getDescription();
+                Double poiLati = Double.parseDouble(myPoi.getLati());
+                Double poiLong = Double.parseDouble(myPoi.getLong());
+
+                addPoi(poiDesc,poiLati,poiLong);
+            }
         }
     }
 
@@ -142,5 +146,11 @@ public class MapActivity extends AppCompatActivity  implements OnMapReadyCallbac
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
+    }
+
+    private void addPoi (String desc, Double latitude, Double longitude){
+        LatLng point = new LatLng(latitude, longitude);
+        map.addMarker(new MarkerOptions().position(point).title(desc));
+        map.moveCamera(CameraUpdateFactory.newLatLng(point));
     }
 }
