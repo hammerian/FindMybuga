@@ -21,6 +21,13 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.mapbox.android.core.location.LocationEngine;
 import com.mapbox.android.core.location.LocationEngineListener;
 import com.mapbox.android.core.location.LocationEnginePriority;
@@ -40,6 +47,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements LocationEngineListener,
         PermissionsListener {
 
+    private DatabaseReference dbRef;
     private PermissionsManager permissionsManager;
     private Location originLocation;
     private LocationEngine locationEngine;
@@ -72,12 +80,15 @@ public class MainActivity extends AppCompatActivity implements LocationEngineLis
         btnHist = (Button) findViewById(R.id.btnHist);
         enableLocation();
 
+        dbRef = FirebaseDatabase.getInstance().getReference().child("Lugares");
+
         rclPos.setLayoutManager(new LinearLayoutManager(this));
         listPos = new ArrayList<PoiPos>();
         listAdapter= new MyListAdapter(listPos,this.getApplicationContext());
         // Y carga el Array de imagenes
         rclPos.setAdapter(listAdapter);
         rclPos.setHasFixedSize(false);
+
 
         btnPos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +121,31 @@ public class MainActivity extends AppCompatActivity implements LocationEngineLis
             }
         });
 
+        ValueEventListener taskitaListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<PoiPos> newListData = new ArrayList<PoiPos>();
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    PoiPos tsk = (PoiPos) ds.getValue(PoiPos.class);
+                    newListData.add(tsk);
+                }
+                listPos = newListData;
+                updateList(listPos);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                //Don't ignore errors!
+            }
+        };
+        dbRef.addListenerForSingleValueEvent(taskitaListener);
+
+    }
+
+    private void updateList (ArrayList<PoiPos> myNewList) {
+        listAdapter = new MyListAdapter(myNewList,this.getApplicationContext());
+        rclPos.setAdapter(listAdapter);
+        listAdapter.notifyDataSetChanged();
     }
 
     @SuppressLint("MissingPermission")
@@ -224,6 +260,16 @@ public class MainActivity extends AppCompatActivity implements LocationEngineLis
                     PoiPos newPos = new PoiPos(posDesc,newLon, newLat);
                     listPos.add(newPos);
                     popupWindow.dismiss();
+                    dbRef.setValue(listPos).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+
+                            } else {
+                                Toast.makeText(MainActivity.this, "El listado no se ha guardado", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
 
                 }
             }
