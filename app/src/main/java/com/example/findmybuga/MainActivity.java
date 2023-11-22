@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements LocationEngineLis
 
         if(locationEngine != null){
             locationEngine.requestLocationUpdates();
+            updateList(listPos);
         }
     }
 
@@ -115,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements LocationEngineLis
                     intent.putExtras(b);
                     //begin activity
                     startActivity(intent);
+                    finish();
                 }else {
                     Toast.makeText(MainActivity.this, "Tienes que añadir varias localizaciones para ver el historial", Toast.LENGTH_SHORT).show();
                 }
