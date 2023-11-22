@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.location.Location;
 import android.os.Bundle;
+import android.widget.Button;
 
 import com.mapbox.android.core.location.LocationEngine;
 import com.mapbox.android.core.location.LocationEngineListener;
@@ -33,11 +34,14 @@ public class MapActivity extends AppCompatActivity  implements OnMapReadyCallbac
 
     private MapView mvBox;
     private MapboxMap map;
+    private Button btnNav;
+    private Button btnNew;
     private PermissionsManager permissionsManager;
     private LocationEngine locationEngine;
     private LocationLayerPlugin locationLayerPlugin;
     private PoiPos originPosition;
     private Point destinationPosition;
+    private Marker destinationMarker;
     private Location originLocation;
     public ArrayList<PoiPos> listPos;
 
@@ -46,6 +50,8 @@ public class MapActivity extends AppCompatActivity  implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
+        btnNav = (Button) findViewById(R.id.btnNav);
+        btnNew = (Button) findViewById(R.id.btnNew);
         mvBox = (MapView) findViewById(R.id.mvBox);
         mvBox.onCreate(savedInstanceState);
         mvBox.getMapAsync(this);
@@ -79,12 +85,12 @@ public class MapActivity extends AppCompatActivity  implements OnMapReadyCallbac
 
     @Override
     public void onMapClick(@NonNull LatLng point) {
-     /*  if(destinationMarker != null){
+       if(destinationMarker != null){
             map.removeMarker(destinationMarker);
         }
         destinationMarker = map.addMarker(new MarkerOptions().position(point));
         destinationPosition = Point.fromLngLat(point.getLongitude(), point.getLatitude());
-        originPosition = Point.fromLngLat(originLocation.getLongitude(), originLocation.getLatitude()); */
+      //originPosition = Point.fromLngLat(originLocation.getLongitude(), originLocation.getLatitude());
 
 
     }

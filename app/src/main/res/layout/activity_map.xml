@@ -16,4 +16,35 @@
         mapbox:mapbox_cameraZoom = "9"
         />
 
+    <LinearLayout
+        android:id="@+id/lnrBtns"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_alignRight="@id/mvBox"
+        android:layout_alignBottom="@id/mvBox"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnNew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:visibility="invisible"
+            android:text="Añadir nuevo" />
+
+        <Button
+            android:id="@+id/btnNav"
+            android:layout_gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:visibility="invisible"
+            android:text="Navegar" />
+
+    </LinearLayout>
+
 </RelativeLayout>
